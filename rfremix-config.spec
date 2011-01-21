@@ -56,10 +56,13 @@ install -m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
 
 
 %post
-test -f /sbin/chkconfig && /sbin/chkconfig rfremixconf on || :
+# We do not want to run rfremixconf during updating for 0.9.1 (FIXME? later)
+if [ $1 -eq 1 ]; then
+    test -f /sbin/chkconfig && /sbin/chkconfig rfremixconf on || :
+fi
 
 %preun
-if [ "$1" = 0 ]; then
+if [ $1 -eq 0 ]; then
     test -f /sbin/chkconfig && /sbin/chkconfig --del rfremixconf || :
 fi
 
@@ -79,6 +82,7 @@ rm -rf %{buildroot}
 %changelog
 * Mon Jan 21 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.2-1
 - attach floppy in modprobe.d
+- do not start rfremixconf service after update from 0.9.1
 
 * Sat Oct 30 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.1-4
 - added R(post): chkconfig
