@@ -1,7 +1,7 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
-Version:	0.9.1
-Release:	4%{?dist}
+Version:	0.9.2
+Release:	1%{?dist}
 Epoch:		3
 
 License:	GPLv2
@@ -46,10 +46,13 @@ install -m 755 rfremixconf.init %{buildroot}/etc/rc.d/init.d/rfremixconf
 
 # make skel
 install -dD %{buildroot}/etc/X11/xinit/xinitrc.d
+install -dD %{buildroot}/etc/modprobe.d
 
 # Configure layout switcher in X
 install -m755 10-set-layout-switcher-kbd-combination.sh \
     %{buildroot}/%{_sysconfdir}/X11/xinit/xinitrc.d/
+
+install =m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
 
 
 %post
@@ -70,9 +73,13 @@ rm -rf %{buildroot}
 %doc GPL README AUTHORS Changelog
 %{_sysconfdir}/rc.d/init.d/rfremixconf
 %attr(0755, root, root) %{_sysconfdir}/X11/xinit/xinitrc.d/*
+%{_sysconfdir}/modprobe.d/floppy-pnp.conf
 
 
 %changelog
+* Mon Jan 21 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.2-1
+- attach floppy in modprobe.d
+
 * Sat Oct 30 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.1-4
 - added R(post): chkconfig
 

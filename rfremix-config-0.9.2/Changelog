@@ -1,3 +1,6 @@
 Changelog:
+* Fri Jan 21 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.2
+- attach floppy in modprobe.d
+
 * Thu Sep 23 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.1
 - drop kxkbrc config. It does not necessary in KDE 4.5
