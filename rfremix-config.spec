@@ -52,7 +52,7 @@ install -dD %{buildroot}/etc/modprobe.d
 install -m755 10-set-layout-switcher-kbd-combination.sh \
     %{buildroot}/%{_sysconfdir}/X11/xinit/xinitrc.d/
 
-install =m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
+install -m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
 
 
 %post
