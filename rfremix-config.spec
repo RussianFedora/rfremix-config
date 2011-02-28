@@ -7,7 +7,7 @@ Epoch:		3
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
-Source:		rfremix-config-%{version}.tar.bz2
+Source:		https://github.com/Tigro/tarballs/raw/master/rfremix-config-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:	noarch
