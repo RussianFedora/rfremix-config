@@ -1,7 +1,7 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
 Version:	0.10.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Epoch:		3
 
 License:	GPLv2
@@ -64,11 +64,17 @@ install -m644 gschema.override/* \
 if [ $1 -eq 1 ]; then
     test -f /sbin/chkconfig && /sbin/chkconfig rfremixconf on || :
 fi
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+
 
 %preun
 if [ $1 -eq 0 ]; then
     test -f /sbin/chkconfig && /sbin/chkconfig --del rfremixconf || :
 fi
+
+
+%postun
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %clean
@@ -85,6 +91,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Apr  8 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.10.0-2
+- added glib-compile-schemas
+
 * Fri Apr  8 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.10.0-1
 - override font. Sans 10 by default
 - override hinting. Slight by default
