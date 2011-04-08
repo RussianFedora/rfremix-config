@@ -1,13 +1,13 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
-Version:	0.9.2
+Version:	0.10.0
 Release:	1%{?dist}
 Epoch:		3
 
 License:	GPLv2
 Group:		System Environment/Base
-URL:		http://fedoraproject.org
-Source:		https://github.com/Tigro/tarballs/raw/master/rfremix-config-%{version}.tar.bz2
+URL:		http://russianfedora.ru
+Source:		http://koji.russianfedora.ru/storage/%{name}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:	noarch
@@ -54,6 +54,10 @@ install -m755 10-set-layout-switcher-kbd-combination.sh \
 
 install -m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
 
+install -dD %{buildroot}%{_datadir}/glib-2.0/schemas
+install -m644 gschema.override/* \
+	%{buildroot}%{_datadir}/glib-2.0/schemas/
+
 
 %post
 # We do not want to run rfremixconf during updating for 0.9.1 (FIXME? later)
@@ -77,9 +81,16 @@ rm -rf %{buildroot}
 %{_sysconfdir}/rc.d/init.d/rfremixconf
 %attr(0755, root, root) %{_sysconfdir}/X11/xinit/xinitrc.d/*
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
+%{_datadir}/glib-2.0/schemas/*.override
 
 
 %changelog
+* Fri Apr  8 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.10.0-1
+- override font. Sans 10 by default
+- override hinting. Slight by default
+- override antialiasing. Rgba by default
+- set Sans Bold 11 as default metacity font
+
 * Mon Jan 21 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.2-1
 - attach floppy in modprobe.d
 - do not start rfremixconf service after update from 0.9.1
