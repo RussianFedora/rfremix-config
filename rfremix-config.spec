@@ -1,13 +1,14 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
 Version:	15
-Release:	0.1%{?dist}
+Release:	0.2%{?dist}
 Epoch:		3
 
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://russianfedora.ru
 Source:		http://koji.russianfedora.ru/storage/%{name}/%{name}-%{version}.tar.bz2
+Patch0:		rfremix-config-15-release-file.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:	noarch
@@ -31,6 +32,7 @@ keyboard layout in KDE, GNOME and others.
 
 %prep
 %setup -q
+%patch0 -p1 -b .release-file
 
 
 %build
@@ -91,6 +93,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sat Apr 23 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15-0.2
+- also change distro-release to rfremix-release in smolt config
+
 * Fri Apr 22 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15-0.1
 - bump version. One for distribution
 - change smolt config to detect rfremix
