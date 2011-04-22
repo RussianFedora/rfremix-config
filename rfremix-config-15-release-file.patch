@@ -1,0 +1,19 @@
+commit 5e7fd1bb429723ce0e607bb6722ed9ba3abc7c76
+Author: Tigro <ashejn@gmail.com>
+Date:   Sat Apr 23 01:17:47 2011 +0400
+
+    change distro-release to rfremix-release
+
+diff --git a/rfremixconf.init b/rfremixconf.init
+index d438cf6..c16d20d 100755
+--- a/rfremixconf.init
++++ b/rfremixconf.init
+@@ -81,6 +81,7 @@ case "$1" in
+        if [ -f /etc/smolt/config.py ]; then
+            sed -i 's!OS = os_detect.get_os_info!#OS = os_detect.get_os_info!g' /etc/smolt/config.py
+            sed -i 's!#    OS = file!OS = file!g' /etc/smolt/config.py
++           sed -i 's!distro-release!rfremix-release!g' /etc/smolt/config.py
+        fi
+ 
+        # end of rules
+
