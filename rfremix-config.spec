@@ -1,7 +1,7 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
-Version:	0.10.0
-Release:	2%{?dist}
+Version:	15
+Release:	0.1%{?dist}
 Epoch:		3
 
 License:	GPLv2
@@ -91,6 +91,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Apr 22 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15-0.1
+- bump version. One for distribution
+- change smolt config to detect rfremix
+
 * Fri Apr  8 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.10.0-2
 - added glib-compile-schemas
 
