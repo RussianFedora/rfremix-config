@@ -1,0 +1,94 @@
+#!/bin/bash
+## BEGIN INIT INFO
+# Provides: rfremixconf
+# Default-Start: 3 5
+# Default-Stop: 0 1 2 4 6
+# Required-Start:
+# Short-Description: Starts the rfremixconf configuration script
+# Description: Applies some RFRemix configs at the first boot.
+## END INIT INFO
+
+#
+# rfremixconf: Starts the rfremixconf script if it hasn't been run before
+#
+# chkconfig: 35 00 95
+#
+# description: Applies some RFRemix configs at the first boot.
+
+# Source function library.
+. /etc/init.d/functions
+
+prog="RFRemix configure"
+
+case "$1" in
+    start)
+	echo -n $"Starting $prog: "
+
+	# disable setroubleshoot (sometimes)
+	if [ -f /etc/selinux/config ]; then
+		. /etc/selinux/config
+	fi
+
+	if [ "$SELINUX" != "enforcing" ]; then
+		rpm -e setroubleshoot-server setroubleshoot-plugins \
+			setroubleshoot > /dev/null 2>&1
+	fi
+
+	# make kdm russian
+	if [ -f /etc/kde/kdm/kdmrc ]; then
+	    if [ "$(echo $LANG | awk -F_ '{print $1}')" == "ru" ]; then
+		sed -i 's!#Language=de_DE!Language=ru_RU!' /etc/kde/kdm/kdmrc
+	    fi
+	fi
+
+	# adding keyboard switchers
+	if [ -f /etc/sysconfig/keyboard ]; then
+	    . /etc/sysconfig/keyboard
+	    # GNOME
+	    LAYOUT_OPT=$(echo $OPTIONS | sed 's!grp:!grp\tgrp:!g;s!grp_led:!grp\tgrp_led:!g')
+
+	    if [ -d /etc/gconf/gconf.xml.defaults ]; then
+	        /usr/bin/gconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults \
+	   	    -s -t list --list-type=string /desktop/gnome/peripherals/keyboard/kbd/layouts "[$LAYOUT]" > /dev/null
+		/usr/bin/gconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults \
+                    -s -t list --list-type=string /desktop/gnome/peripherals/keyboard/kbd/options "[$LAYOUT_OPT]" > /dev/null
+	    fi
+	fi
+
+	# Metacity Default font. Set "Sans Bold 11"
+	if [ -x /usr/bin/gconftool-2 ]; then
+	    /usr/bin/gconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults \
+		-s -t string /apps/metacity/general/titlebar_font "Sans Bold 11"
+	fi
+
+	## Smolt OS detection
+	#if [ -f /etc/smolt/config.py ]; then
+	#    sed -i 's!OS = os_detect.get_os_info!#OS = os_detect.get_os_info!g' /etc/smolt/config.py
+	#    sed -i 's!#    OS = file!OS = file!g' /etc/smolt/config.py
+	#    sed -i 's!distro-release!rfremix-release!g' /etc/smolt/config.py
+	#fi
+
+	# end of rules
+
+        RETVAL=$?
+
+        # If rfremixconf succeeded, chkconfig it off.
+        if [ "$RETVAL" -eq 0 ]; then
+            action "" /bin/true
+            /sbin/chkconfig rfremixconf off
+        else
+            action "" /bin/false
+        fi
+
+        exit $RETVAL
+        ;;
+
+    stop)
+        exit 0
+        ;;
+
+    *)
+        echo $"Usage: $0 {start|stop}"
+        exit 3
+        ;;
+esac

@@ -1,0 +1,22 @@
+Changelog:
+* Tue May 17 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.1
+- drop restricted schemas
+- drop restricted rules from rfremixconf
+- apply rule 'menus-have-icons'
+
+* Fri Apr 22 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15
+- bump version. One for distribution
+- change smolt config to detect rfremix
+
+* Fri Apr  8 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.10.0
+- rules only for RFRemix 15
+- override font. Sans 10 by default
+- override hinting. Slight by default
+- override antialiasing. Rgba by default
+- set Sans Bold 11 as default metacity font
+
+* Fri Jan 21 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.2
+- attach floppy in modprobe.d
+
+* Thu Sep 23 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.1
+- drop kxkbrc config. It does not necessary in KDE 4.5

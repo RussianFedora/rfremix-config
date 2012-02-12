@@ -1,13 +1,13 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
-Version:	15.1
-Release:	1%{?dist}
+Version:	17
+Release:	1%{?dist}.R
 Epoch:		3
 
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://russianfedora.ru
-Source:		http://koji.russianfedora.ru/storage/%{name}/%{name}-%{version}.tar.bz2
+Source:		%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:	noarch
@@ -91,6 +91,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Feb 12 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 17-1.R
+- rebuilt
+
 * Tue May 17 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.1-1
 - drop restricted schemas
 - drop restricted rules from rfremixconf
