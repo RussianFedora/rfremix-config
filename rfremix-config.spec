@@ -1,13 +1,13 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
-Version:	15.1
+Version:	16
 Release:	1%{?dist}
 Epoch:		3
 
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://russianfedora.ru
-Source:		http://koji.russianfedora.ru/storage/%{name}/%{name}-%{version}.tar.bz2
+Source:		%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:	noarch
@@ -43,6 +43,7 @@ rm -rf %{buildroot}
 # Install rfremixconf
 install -d -m 755 %{buildroot}/etc/rc.d/init.d
 install -m 755 rfremixconf.init %{buildroot}/etc/rc.d/init.d/rfremixconf
+install -m 755 rfremixconf-late.init %{buildroot}/etc/rc.d/init.d/rfremixconf-late
 
 # make skel
 install -dD %{buildroot}/etc/X11/xinit/xinitrc.d
@@ -63,6 +64,7 @@ install -m644 gschema.override/* \
 # We do not want to run rfremixconf during updating for 0.9.1 (FIXME? later)
 if [ $1 -eq 1 ]; then
     test -f /sbin/chkconfig && /sbin/chkconfig rfremixconf on || :
+    test -f /sbin/chkconfig && /sbin/chkconfig rfremixconf-late on || :
 fi
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
@@ -70,6 +72,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %preun
 if [ $1 -eq 0 ]; then
     test -f /sbin/chkconfig && /sbin/chkconfig --del rfremixconf || :
+    test -f /sbin/chkconfig && /sbin/chkconfig --del rfremixconf-late || :
 fi
 
 
@@ -84,13 +87,16 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %doc GPL README AUTHORS Changelog
-%{_sysconfdir}/rc.d/init.d/rfremixconf
+%{_sysconfdir}/rc.d/init.d/rfremixconf*
 %attr(0755, root, root) %{_sysconfdir}/X11/xinit/xinitrc.d/*
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
 %{_datadir}/glib-2.0/schemas/*.override
 
 
 %changelog
+* Mon Mar 26 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 16-1
+- added rfremixconf-late init script
+
 * Tue May 17 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 15.1-1
 - drop restricted schemas
 - drop restricted rules from rfremixconf

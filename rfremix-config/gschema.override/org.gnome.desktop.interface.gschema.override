@@ -1,0 +1,3 @@
+[org.gnome.desktop.interface]
+font-name='Sans 10'
+menus-have-icons=true
