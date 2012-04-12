@@ -1,7 +1,7 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
 Version:	17
-Release:	2%{?dist}
+Release:	3%{?dist}
 Epoch:		3
 
 License:	GPLv2
@@ -53,9 +53,9 @@ install -m755 10-set-layout-switcher-kbd-combination.sh \
 
 install -m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
 
-#install -dD %{buildroot}%{_datadir}/glib-2.0/schemas
-#install -m644 gschema.override/* \
-#	%{buildroot}%{_datadir}/glib-2.0/schemas/
+install -dD %{buildroot}%{_datadir}/glib-2.0/schemas
+install -m644 gschema.override/* \
+	%{buildroot}%{_datadir}/glib-2.0/schemas/
 
 
 %post
@@ -63,7 +63,7 @@ install -m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
 if [ $1 -eq 1 ]; then
     test -f /sbin/chkconfig && /sbin/chkconfig rfremixconf on || :
 fi
-#glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %preun
@@ -72,8 +72,8 @@ if [ $1 -eq 0 ]; then
 fi
 
 
-#%postun
-#glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+%postun
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %clean
@@ -86,10 +86,13 @@ rm -rf %{buildroot}
 %{_sysconfdir}/rc.d/init.d/rfremixconf
 %attr(0755, root, root) %{_sysconfdir}/X11/xinit/xinitrc.d/*
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
-#%{_datadir}/glib-2.0/schemas/*.override
+%{_datadir}/glib-2.0/schemas/*.override
 
 
 %changelog
+* Thu Apr 12 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 17-3.R
+- use rgba instead of grayscale
+
 * Thu Apr 12 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 17-2.R
 - do not install schemas
 
