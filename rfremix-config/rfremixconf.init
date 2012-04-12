@@ -61,10 +61,12 @@ case "$1" in
 		-s -t string /apps/metacity/general/titlebar_font "Sans Bold 11"
 	fi
 
-	# Smolt OS detection
-	if [ -f /etc/smolt/config.py ]; then
-            sed -i 's!OS = os_detect.get_os_info()!OS = file("/etc/rfremix-release").read().strip()!g' /etc/smolt/config.py
-	fi
+	## Smolt OS detection
+	#if [ -f /etc/smolt/config.py ]; then
+	#    sed -i 's!OS = os_detect.get_os_info!#OS = os_detect.get_os_info!g' /etc/smolt/config.py
+	#    sed -i 's!#    OS = file!OS = file!g' /etc/smolt/config.py
+	#    sed -i 's!distro-release!rfremix-release!g' /etc/smolt/config.py
+	#fi
 
 	# end of rules
 
