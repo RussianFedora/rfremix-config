@@ -9,7 +9,6 @@ Group:		System Environment/Base
 URL:		http://russianfedora.ru
 Source:		%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
 BuildArch:	noarch
 
 Provides:	russianfedora-config
@@ -41,10 +40,8 @@ keyboard layout in KDE, GNOME and others.
 rm -rf %{buildroot}
 
 # Install rfremixconf
-install -d -m 755 %{buildroot}%{_sbindir}
-install -d -m 755 /lib/systemd/system
-install -m 755 rfremixconf rfremixconf-late %{buiildroot}%{_sbindir}
-install -m 644 *.service %{buildroot}/lib/systemd/system/
+install -d -m 755 %{buildroot}/etc/rc.d/init.d
+install -m 755 rfremixconf.init %{buildroot}/etc/rc.d/init.d/rfremixconf
 
 # make skel
 install -dD %{buildroot}/etc/X11/xinit/xinitrc.d
@@ -64,18 +61,14 @@ install -m644 gschema.override/* \
 %post
 # We do not want to run rfremixconf during updating for 0.9.1 (FIXME? later)
 if [ $1 -eq 1 ]; then
-    systemctl enable rfremixconf.service
-    systemctl enable rfremixconf-late.service
+    test -f /sbin/chkconfig && /sbin/chkconfig rfremixconf on || :
 fi
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %preun
 if [ $1 -eq 0 ]; then
-    /bin/systemctl stop rfremixconf.service
-    /bin/systemctl stop rfremixconf-late.service
     test -f /sbin/chkconfig && /sbin/chkconfig --del rfremixconf || :
-    test -f /sbin/chkconfig && /sbin/chkconfig --del rfremixconf-late || :
 fi
 
 
@@ -90,8 +83,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %doc GPL README AUTHORS Changelog
-%{_sbindir}/*
-/lib/systemd/system/.service
+%{_sysconfdir}/rc.d/init.d/rfremixconf
 %attr(0755, root, root) %{_sysconfdir}/X11/xinit/xinitrc.d/*
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
 %{_datadir}/glib-2.0/schemas/*.override
