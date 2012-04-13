@@ -1,7 +1,7 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
 Version:	16
-Release:	1%{?dist}
+Release:	2%{?dist}
 Epoch:		3
 
 License:	GPLv2
@@ -90,6 +90,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Apr 13 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 16-2.R
+- drop obsolete rules
+
 * Mon Mar 26 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 16-1.R
 - drop Sans font by default
 - drop Slight by default
