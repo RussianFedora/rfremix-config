@@ -24,31 +24,97 @@ case "$1" in
     start)
 	echo -n $"Starting $prog: "
 
-	if [ -f /etc/vconsole.conf ]; then
-    	    echo "FONT=latarcyrheb-sun16" >> /etc/vconsole.conf
-	fi
 
-	if [ -f /etc/locale.conf ]; then
-	    . /etc/locale.conf
+        if [ "$LANG" == "ru_RU.utf8" -o "$LANG" == "ru_RU.UTF-8" ]; then
 
-	    localectl set-keymap `echo $LANG | awk -F_ '{ print $1 }'`
-        fi 
+  	    if [ -f /etc/vconsole.conf ]; then
+	        if [ ! $(grep "FONT" /etc/vconsole.conf) ]; then
+       	            echo "FONT=latarcyrheb-sun16" >> /etc/vconsole.conf
+	        fi
+	    fi
 
-	# adding keyboard switchers
-	#if [ -f /etc/sysconfig/keyboard ]; then
-	#    . /etc/sysconfig/keyboard
-	#    # GNOME
-	#    LAYOUT_OPT=$(echo $OPTIONS | sed 's!grp:!grp\tgrp:!g;s!grp_led:!grp\tgrp_led:!g')
-	#
-	#    if [ -d /etc/gconf/gconf.xml.defaults ]; then
-	#        /usr/bin/gconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults \
-	#   	    -s -t list --list-type=string /desktop/gnome/peripherals/keyboard/kbd/layouts "[$LAYOUT]" > /dev/null
-	#	/usr/bin/gconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults \
-        #            -s -t list --list-type=string /desktop/gnome/peripherals/keyboard/kbd/options "[$LAYOUT_OPT]" > /dev/null
-	#    fi
-	#fi
+	    localectl set-keymap ru --no-convert
+
+	    if [ -f  /etc/X11/xorg.conf.d/*anaconda*.conf ]; then
+		LAYOUT=$(cat  /etc/X11/xorg.conf.d/*anaconda*.conf  | grep "XkbLayout" | awk '{ print $NF }' | sed 's!"!!g')
+		LAYOUT_OPT=$(cat  /etc/X11/xorg.conf.d/*anaconda*.conf  | grep "XkbOptions" | awk '{ print $NF }' | sed 's!"!!g')
+
+		localectl set-x11-keymap "$LAYOUT" pc105 '' "$LAYOUT_OPT" --no-convert
+            fi 
+
+	    if [ -x /usr/bin/gsettings ]; then
+	        cat > /usr/share/glib-2.0/schemas/org.gnome.desktop.input-sources.gschema.override << EOF
+[org.gnome.desktop.input-sources]
+sources=[('xkb', 'us'), ('xkb', 'ru')]
+EOF
+
+	        TOGGLE=$(cat  /etc/X11/xorg.conf.d/*anaconda*.conf  | grep toggle | awk -F: '{ print $NF }' | sed 's!"!!g')
+	        case "$TOGGLE" in
+	            alt_shift_toggle)
+		       GNOME_TOGGLE="alt-shift"
+		       ;;
+		    ctrl_shift_toggle)
+    		       GNOME_TOGGLE="ctrl-shift"
+		       ;;
+	    	    lalt_lshift_toggle)
+		       GNOME_TOGGLE="alt-shift-l"
+		       ;;
+	    	    ralt_rshift_toggle)
+		       GNOME_TOGGLE="alt-shift-r"
+		       ;;
+	    	    lctrl_lshift_toggle)
+		       GNOME_TOGGLE="ctrl-shift-l"
+		       ;;
+	    	    rctrl_rshift_toggle)
+		       GNOME_TOGGLE="ctrl-shift-r"
+		       ;;
+	    	    shifts_toggle)
+		       GNOME_TOGGLE="shift-l-shift-r"
+		       ;;
+	    	    alts_toggle)
+		       GNOME_TOGGLE="alt-l-alt-r"
+		       ;;
+	    	    ctrl_alt_toggle)
+		       GNOME_TOGGLE="alt-ctrl"
+		       ;;
+	    	    lalt_toggle)
+		       GNOME_TOGGLE="alt-l"
+		       ;;
+	    	    rctrl_toggle)
+		       GNOME_TOGGLE="ctrl-r"
+		       ;;
+	    	    lctrl_toggle)
+		       GNOME_TOGGLE="ctrl-l"
+		       ;;
+	    	    lshift_toggle)
+		       GNOME_TOGGLE="shift-l"
+		       ;;
+	    	    rshift_toggle)
+		       GNOME_TOGGLE="shift-r"
+	  	       ;;
+	    	    *)
+		       GNOME_TOGGLE="alt-shift"
+		       ;;
+   	        esac
+
+		cat > /usr/share/glib-2.0/schemas/org.gnome.settings-daemon.peripherals.keyboard.gschema.override <<EOF
+[org.gnome.settings-daemon.peripherals.keyboard]
+input-sources-switcher='$GNOME_TOGGLE'
+EOF
+
+		/usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas/ > /dev/null 2>&1
+	    fi
+
+	    if [ -x /usr/bin/mateconftool-2 ]; then
+	        /usr/bin/mateconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults \
+	   	    -s -t list --list-type=string /desktop/gnome/peripherals/keyboard/kbd/layouts "[$LAYOUT]" > /dev/null
+		/usr/bin/mateconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults \
+                    -s -t list --list-type=string /desktop/gnome/peripherals/keyboard/kbd/options "[$LAYOUT_OPT]" > /dev/null
+	    fi
 
 	# end of rules
+
+	fi
 
         RETVAL=$?
 

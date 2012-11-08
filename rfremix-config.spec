@@ -1,7 +1,7 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
-Version:	17
-Release:	3%{?dist}
+Version:	18
+Release:	0.1%{?dist}
 Epoch:		3
 
 License:	GPLv2
@@ -48,8 +48,8 @@ install -dD %{buildroot}/etc/X11/xinit/xinitrc.d
 install -dD %{buildroot}/etc/modprobe.d
 
 # Configure layout switcher in X
-install -m755 10-set-layout-switcher-kbd-combination.sh \
-    %{buildroot}/%{_sysconfdir}/X11/xinit/xinitrc.d/
+#install -m755 10-set-layout-switcher-kbd-combination.sh \
+#    %{buildroot}/%{_sysconfdir}/X11/xinit/xinitrc.d/
 
 install -m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
 
@@ -84,12 +84,15 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %doc GPL README AUTHORS Changelog
 %{_sysconfdir}/rc.d/init.d/rfremixconf
-%attr(0755, root, root) %{_sysconfdir}/X11/xinit/xinitrc.d/*
+#%attr(0755, root, root) %{_sysconfdir}/X11/xinit/xinitrc.d/*
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
 %{_datadir}/glib-2.0/schemas/*.override
 
 
 %changelog
+* Thu Nov  8 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.1.R
+- rewrite init script
+
 * Thu Apr 12 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 17-3.R
 - use rgba instead of grayscale
 
