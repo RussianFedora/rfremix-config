@@ -106,10 +106,10 @@ EOF
 	    fi
 
 	    if [ -x /usr/bin/mateconftool-2 ]; then
-	        /usr/bin/mateconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults \
-	   	    -s -t list --list-type=string /desktop/gnome/peripherals/keyboard/kbd/layouts "[$LAYOUT]" > /dev/null
-		/usr/bin/mateconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults \
-                    -s -t list --list-type=string /desktop/gnome/peripherals/keyboard/kbd/options "[$LAYOUT_OPT]" > /dev/null
+	        /usr/bin/mateconftool-2 --direct --config-source=xml:readwrite:/etc/mateconf/mateconf.xml.defaults \
+	   	    -s -t list --list-type=string /desktop/mate/peripherals/keyboard/kbd/layouts "[$LAYOUT]" > /dev/null
+		/usr/bin/mateconftool-2 --direct --config-source=xml:readwrite:/etc/mateconf/mateconf.xml.defaults \
+                    -s -t list --list-type=string /desktop/mate/peripherals/keyboard/kbd/options "[$LAYOUT_OPT]" > /dev/null
 	    fi
 
 	# end of rules
