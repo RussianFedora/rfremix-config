@@ -39,8 +39,12 @@ case "$1" in
 		LAYOUT=$(cat  /etc/X11/xorg.conf.d/*anaconda*.conf  | grep "XkbLayout" | awk '{ print $NF }' | sed 's!"!!g')
 		LAYOUT_OPT=$(cat  /etc/X11/xorg.conf.d/*anaconda*.conf  | grep "XkbOptions" | awk '{ print $NF }' | sed 's!"!!g')
 
-		localectl set-x11-keymap "$LAYOUT" pc105 '' "$LAYOUT_OPT" --no-convert
-            fi 
+            else
+		LAYOUT="us,ru"
+		LAYOUT_OPT="grp:alt_shift_toggle,grp_led:scroll" 
+	    fi
+		
+	    localectl set-x11-keymap "$LAYOUT" pc105 '' "$LAYOUT_OPT" --no-convert
 
 	    if [ -x /usr/bin/gsettings ]; then
 	        cat > /usr/share/glib-2.0/schemas/org.gnome.desktop.input-sources.gschema.override << EOF

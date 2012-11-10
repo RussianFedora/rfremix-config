@@ -1,7 +1,7 @@
 Summary:	Russian Fedora Remix firstboot configure scripts
 Name:		rfremix-config
 Version:	18
-Release:	0.2%{?dist}
+Release:	0.3%{?dist}
 Epoch:		3
 
 License:	GPLv2
@@ -90,6 +90,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Nov 11 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.3.R
+- always set-x11-keymap
+
 * Sat Nov 10 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.2.R
 - fix mate paths
 
