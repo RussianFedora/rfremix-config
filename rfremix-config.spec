@@ -1,7 +1,7 @@
 Summary:	RFRemix firstboot configure scripts
 Name:		rfremix-config
 Version:	18
-Release:	0.2%{?dist}
+Release:	0.4%{?dist}
 Epoch:		3
 
 License:	GPLv2
@@ -93,8 +93,14 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Tue Nov 13 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.2.R
+* Tue Nov 13 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.4.R
 - added cliptit config (used in GNOME by default in RFRemix)
+
+* Sun Nov 11 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.3.R
+- always set-x11-keymap
+
+* Sat Nov 10 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.2.R
+- fix mate paths
 
 * Thu Nov  8 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.1.R
 - rewrite init script
