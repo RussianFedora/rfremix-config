@@ -1,7 +1,7 @@
-Summary:	Russian Fedora Remix firstboot configure scripts
+Summary:	RFRemix firstboot configure scripts
 Name:		rfremix-config
 Version:	18
-Release:	0.3%{?dist}
+Release:	0.2%{?dist}
 Epoch:		3
 
 License:	GPLv2
@@ -21,7 +21,7 @@ Requires(post):	chkconfig
 
 
 %description
-These are some scripts to configure Russian Fedora Remix at
+These are some scripts to configure RFRemix at
 the first boot.
 
 Also package contains some configuration files for swhitching
@@ -46,6 +46,7 @@ install -m 755 rfremixconf.init %{buildroot}/etc/rc.d/init.d/rfremixconf
 # make skel
 install -dD %{buildroot}/etc/X11/xinit/xinitrc.d
 install -dD %{buildroot}/etc/modprobe.d
+install -dD %{buildroot}/etc/skel/.config/clipit
 
 # Configure layout switcher in X
 #install -m755 10-set-layout-switcher-kbd-combination.sh \
@@ -57,6 +58,7 @@ install -dD %{buildroot}%{_datadir}/glib-2.0/schemas
 install -m644 gschema.override/* \
 	%{buildroot}%{_datadir}/glib-2.0/schemas/
 
+install -m644 clipitrc %{buildroot}/etc/skel/.config/clipit/
 
 %post
 # We do not want to run rfremixconf during updating for 0.9.1 (FIXME? later)
@@ -86,15 +88,13 @@ rm -rf %{buildroot}
 %{_sysconfdir}/rc.d/init.d/rfremixconf
 #%attr(0755, root, root) %{_sysconfdir}/X11/xinit/xinitrc.d/*
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
+%{_sysconfdir}/skel/.config/clipit/clipitrc
 %{_datadir}/glib-2.0/schemas/*.override
 
 
 %changelog
-* Sun Nov 11 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.3.R
-- always set-x11-keymap
-
-* Sat Nov 10 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.2.R
-- fix mate paths
+* Tue Nov 13 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.2.R
+- added cliptit config (used in GNOME by default in RFRemix)
 
 * Thu Nov  8 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.1.R
 - rewrite init script
