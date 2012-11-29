@@ -1,7 +1,7 @@
 Summary:	RFRemix firstboot configure scripts
 Name:		rfremix-config
 Version:	18
-Release:	0.4%{?dist}
+Release:	0.5%{?dist}
 Epoch:		3
 
 License:	GPLv2
@@ -93,6 +93,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Nov 29 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.5.R
+- added new switches
+
 * Tue Nov 13 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.4.R
 - added cliptit config (used in GNOME by default in RFRemix)
 

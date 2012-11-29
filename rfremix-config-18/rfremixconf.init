@@ -54,6 +54,18 @@ EOF
 
 	        TOGGLE=$(cat  /etc/X11/xorg.conf.d/*anaconda*.conf  | grep toggle | awk -F: '{ print $NF }' | sed 's!"!!g')
 	        case "$TOGGLE" in
+	            shift_caps_toggle)
+		       GNOME_TOGGLE="shift-caps"
+		       ;;
+	            alt_caps_toggle)
+                      GNOME_TOGGLE="alt-caps"
+                       ;;
+	            ctrl_caps_toggle)
+                      GNOME_TOGGLE="ctrl-caps"
+                       ;;
+	            caps_toggle)
+                      GNOME_TOGGLE="caps"
+                       ;;
 	            alt_shift_toggle)
 		       GNOME_TOGGLE="alt-shift"
 		       ;;
