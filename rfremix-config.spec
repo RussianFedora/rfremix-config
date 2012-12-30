@@ -1,32 +1,28 @@
-Summary:	RFRemix firstboot configure scripts
-Name:		rfremix-config
-Version:	18
-Release:	0.6%{?dist}
-Epoch:		3
+Summary:        RFRemix configure scripts and configs
+Name:           rfremix-config
+Version:        18
+Release:        0.7%{?dist}
+Epoch:          3
 
-License:	GPLv2
-Group:		System Environment/Base
-URL:		http://russianfedora.ru
-Source:		%{name}-%{version}.tar.bz2
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildArch:	noarch
+License:        GPLv2
+Group:          System Environment/Base
+URL:            http://russianfedora.ru
+Source:         %{name}-%{version}.tar.bz2
+BuildArch:      noarch
 
-Provides:	russianfedora-config
-Provides:	russianfedoraremix-config
-Obsoletes:	russianfedora-config
-Obsoletes:	russianfedoraremix-config
-Obsoletes:	tedora-config
-
-Requires(post):	chkconfig
+Requires(post): chkconfig
 
 
 %description
-These are some scripts to configure RFRemix at
-the first boot.
+This package contains some configuration files for RFRemix linux distribution.
 
-Also package contains some configuration files for swhitching
-keyboard layout in KDE, GNOME and others.
+rfremixconf     - configuration script run at the first boot
+                  it configure keyboard layouts for console, GNOME and MATE
+floppy-pnp.conf - enable floppy support
+clipitrc        - configure clipit (do not save history by default)
 
+org.gnome.settings-daemon.plugins.xsettings.gschema.override - set antialiasing
+                  rgba
 
 %prep
 %setup -q
@@ -47,7 +43,6 @@ install -m 755 rfremixconf.init %{buildroot}/etc/rc.d/init.d/rfremixconf
 install -dD %{buildroot}/etc/X11/xinit/xinitrc.d
 install -dD %{buildroot}/etc/modprobe.d
 install -dD %{buildroot}/etc/skel/.config/clipit
-install -dD %{buildroot}/etc/cron.hourly
 
 # Configure layout switcher in X
 #install -m755 10-set-layout-switcher-kbd-combination.sh \
@@ -57,11 +52,9 @@ install -m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
 
 install -dD %{buildroot}%{_datadir}/glib-2.0/schemas
 install -m644 gschema.override/* \
-	%{buildroot}%{_datadir}/glib-2.0/schemas/
+        %{buildroot}%{_datadir}/glib-2.0/schemas/
 
 install -m644 clipitrc %{buildroot}/etc/skel/.config/clipit/
-
-install -m755 yum*cron %{buildroot}/etc/cron.hourly/
 
 %post
 # We do not want to run rfremixconf during updating for 0.9.1 (FIXME? later)
@@ -81,22 +74,21 @@ fi
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
-%clean
-rm -rf %{buildroot}
-
-
 %files
 %defattr(-,root,root,-)
 %doc GPL README AUTHORS Changelog
 %{_sysconfdir}/rc.d/init.d/rfremixconf
-%{_sysconfdir}/cron.hourly/*.cron
 #%attr(0755, root, root) %{_sysconfdir}/X11/xinit/xinitrc.d/*
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
-%{_sysconfdir}/skel/.config/clipit/clipitrc
+%config(noreplace) %{_sysconfdir}/skel/.config/clipit/clipitrc
 %{_datadir}/glib-2.0/schemas/*.override
 
 
 %changelog
+* Mon Dec 24 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.7.R
+- drop yum cron file. Optional functionality added to firstboot (rf#1146)
+- clean up spec
+
 * Mon Dec 24 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.6.R
 - added con script to update yum cache as they do it in dnf
 
