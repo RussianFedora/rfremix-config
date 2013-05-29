@@ -1,16 +1,17 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
-Version:        18
-Release:        0.7%{?dist}
+Version:        19
+Release:        0.1%{?dist}
 Epoch:          3
 
 License:        GPLv2
 Group:          System Environment/Base
-URL:            http://russianfedora.ru
-Source:         %{name}-%{version}.tar.bz2
+URL:            http://russianfedora.pro
+Source:         %{name}-%{version}.tar.xz
 BuildArch:      noarch
 
 Requires(post): chkconfig
+Requires(post): yum
 
 
 %description
@@ -60,6 +61,9 @@ install -m644 clipitrc %{buildroot}/etc/skel/.config/clipit/
 # We do not want to run rfremixconf during updating for 0.9.1 (FIXME? later)
 if [ $1 -eq 1 ]; then
     test -f /sbin/chkconfig && /sbin/chkconfig rfremixconf on || :
+    if [ -f /etc/yum.conf ]; then
+        sed -i '/installonly_limit/ a\http_caching=none' /etc/yum.conf
+    fi
 fi
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
@@ -85,6 +89,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %changelog
+* Wed May 29 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 19-0.1.R
+- make changes for new gnome input source modifiers
+- write http_caching=none into yum.conf
+
 * Mon Dec 24 2012 Arkady L. Shane <ashejn@yandex-team.ru> - 18-0.7.R
 - drop yum cron file. Optional functionality added to firstboot (rf#1146)
 - clean up spec
