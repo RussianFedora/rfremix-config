@@ -52,7 +52,7 @@ case "$1" in
 	        cat > /usr/share/glib-2.0/schemas/org.gnome.desktop.input-sources.gschema.override << EOF
 [org.gnome.desktop.input-sources]
 sources=[('xkb', 'us'), ('xkb', 'ru')]
-xkb-options=['grp:$TOGGLE']
+xkb-options=['grp:\$TOGGLE']
 EOF
 
 		/usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas/ > /dev/null 2>&1
