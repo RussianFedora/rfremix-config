@@ -47,12 +47,12 @@ case "$1" in
 	    localectl set-x11-keymap "$LAYOUT" pc105 '' "$LAYOUT_OPT" --no-convert
 
 	    if [ -x /usr/bin/gsettings ]; then
-	        TOGGLE=$(cat  /etc/X11/xorg.conf.d/00-keyboard.conf  | grep toggle | awk -F: '{ print $NF }' | sed 's!"!!g')
+	        TOGGLE=$(cat  /etc/X11/xorg.conf.d/00-keyboard.conf  | grep toggle | awk -F[\",] '{ print $NF }')
 
 	        cat > /usr/share/glib-2.0/schemas/org.gnome.desktop.input-sources.gschema.override << EOF
 [org.gnome.desktop.input-sources]
 sources=[('xkb', 'us'), ('xkb', 'ru')]
-xkb-options=['grp:$TOGGLE']
+xkb-options=['$TOGGLE']
 EOF
 
 		/usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas/ > /dev/null 2>&1
