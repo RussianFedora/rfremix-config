@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        19
-Release:        0.4%{?dist}
+Release:        0.5%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -89,6 +89,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %changelog
+* Fri Jun 28 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 19-0.5.R
+- Zaebalo. Fix typo
+
 * Fri Jun 28 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 19-0.4.R
 - update TOOGLE field
 
