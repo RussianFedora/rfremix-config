@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
-Version:        19
-Release:        0.5%{?dist}
+Version:        20
+Release:        1%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -17,8 +17,6 @@ Requires(post): yum
 %description
 This package contains some configuration files for RFRemix linux distribution.
 
-rfremixconf     - configuration script run at the first boot
-                  it configure keyboard layouts for console, GNOME and MATE
 floppy-pnp.conf - enable floppy support
 clipitrc        - configure clipit (do not save history by default)
 
@@ -36,18 +34,10 @@ org.gnome.settings-daemon.plugins.xsettings.gschema.override - set antialiasing
 %install
 rm -rf %{buildroot}
 
-# Install rfremixconf
-install -d -m 755 %{buildroot}/etc/rc.d/init.d
-install -m 755 rfremixconf.init %{buildroot}/etc/rc.d/init.d/rfremixconf
-
 # make skel
 install -dD %{buildroot}/etc/X11/xinit/xinitrc.d
 install -dD %{buildroot}/etc/modprobe.d
 install -dD %{buildroot}/etc/skel/.config/clipit
-
-# Configure layout switcher in X
-#install -m755 10-set-layout-switcher-kbd-combination.sh \
-#    %{buildroot}/%{_sysconfdir}/X11/xinit/xinitrc.d/
 
 install -m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
 
@@ -65,7 +55,10 @@ if [ $1 -eq 1 ]; then
         sed -i '/installonly_limit/ a\http_caching=none' /etc/yum.conf
     fi
 fi
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+
+if [ -x /usr/bin/glib-compile-schemas ]; then
+    glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+fi
 
 
 %preun
@@ -75,20 +68,23 @@ fi
 
 
 %postun
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+if [ -x /usr/bin/glib-compile-schemas ]; then
+    glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+fi
 
 
 %files
 %defattr(-,root,root,-)
 %doc GPL README AUTHORS Changelog
-%{_sysconfdir}/rc.d/init.d/rfremixconf
-#%attr(0755, root, root) %{_sysconfdir}/X11/xinit/xinitrc.d/*
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
 %config(noreplace) %{_sysconfdir}/skel/.config/clipit/clipitrc
 %{_datadir}/glib-2.0/schemas/*.override
 
 
 %changelog
+* Thu Dec 26 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20-1.R
+- drop init script. All keyboard setting successfull setup without it
+
 * Fri Jun 28 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 19-0.5.R
 - Zaebalo. Fix typo
 
