@@ -10,7 +10,6 @@ URL:            http://russianfedora.pro
 Source:         %{name}-%{version}.tar.xz
 BuildArch:      noarch
 
-Requires(post): chkconfig
 Requires(post): yum
 
 
@@ -50,7 +49,6 @@ install -m644 clipitrc %{buildroot}/etc/skel/.config/clipit/
 %post
 # We do not want to run rfremixconf during updating for 0.9.1 (FIXME? later)
 if [ $1 -eq 1 ]; then
-    test -f /sbin/chkconfig && /sbin/chkconfig rfremixconf on || :
     if [ -f /etc/yum.conf ]; then
         sed -i '/installonly_limit/ a\http_caching=none' /etc/yum.conf
     fi
@@ -58,12 +56,6 @@ fi
 
 if [ -x /usr/bin/glib-compile-schemas ]; then
     glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
-fi
-
-
-%preun
-if [ $1 -eq 0 ]; then
-    test -f /sbin/chkconfig && /sbin/chkconfig --del rfremixconf || :
 fi
 
 
