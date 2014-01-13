@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        20
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -34,11 +34,12 @@ org.gnome.settings-daemon.plugins.xsettings.gschema.override - set antialiasing
 rm -rf %{buildroot}
 
 # make skel
-install -dD %{buildroot}/etc/X11/xinit/xinitrc.d
+install -dD %{buildroot}/etc/X11/xorg.conf.d/
 install -dD %{buildroot}/etc/modprobe.d
 install -dD %{buildroot}/etc/skel/.config/clipit
 
 install -m644 floppy-pnp.conf %{buildroot}/%{_sysconfdir}/modprobe.d/
+install -m644 11-evdev-trackpoint.conf %{buildroot}/%{_sysconfdir}/X11/xorg.conf.d/11-evdev-trackpoint.conf
 
 install -dD %{buildroot}%{_datadir}/glib-2.0/schemas
 install -m644 gschema.override/* \
@@ -69,11 +70,15 @@ fi
 %defattr(-,root,root,-)
 %doc GPL README AUTHORS Changelog
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
+%{_sysconfdir}/X11/xorg.conf.d/11-evdev-trackpoint.conf
 %config(noreplace) %{_sysconfdir}/skel/.config/clipit/clipitrc
 %{_datadir}/glib-2.0/schemas/*.override
 
 
 %changelog
+* Mon Jan 13 2014 Arkady L. Shane <ashejn@russianfedora.ru> - 20-2.R
+- added trackpoint config
+
 * Thu Dec 26 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 20-1.R
 - drop init script. All keyboard setting successfull setup without it
 
