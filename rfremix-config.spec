@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
-Version:        20
-Release:        2%{?dist}
+Version:        23
+Release:        1%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -10,17 +10,30 @@ URL:            http://russianfedora.pro
 Source:         %{name}-%{version}.tar.xz
 BuildArch:      noarch
 
-Requires(post): yum
-
-
 %description
 This package contains some configuration files for RFRemix linux distribution.
 
 floppy-pnp.conf - enable floppy support
 clipitrc        - configure clipit (do not save history by default)
 
+
+%package gnome
+Summary:        RFRemix configurations for GNOME
+Group:          System Environment/Libraries
+License:        GPLv2
+
+Requires:       gnome-shell-theme-korora
+Requires:       gnome-shell-extension-user-theme
+Requires(post): glib2
+
+
+%description gnome
+This package contain configuration files for GNOME 3
+
 org.gnome.settings-daemon.plugins.xsettings.gschema.override - set antialiasing
                   rgba
+org.gnome.shell.extensions.user-theme.gschema.override - set Korora GNOME
+                  Shell theme by default
 
 %prep
 %setup -q
@@ -31,8 +44,6 @@ org.gnome.settings-daemon.plugins.xsettings.gschema.override - set antialiasing
 
 
 %install
-rm -rf %{buildroot}
-
 # make skel
 install -dD %{buildroot}/etc/X11/xorg.conf.d/
 install -dD %{buildroot}/etc/modprobe.d
@@ -47,20 +58,13 @@ install -m644 gschema.override/* \
 
 install -m644 clipitrc %{buildroot}/etc/skel/.config/clipit/
 
-%post
-# We do not want to run rfremixconf during updating for 0.9.1 (FIXME? later)
-if [ $1 -eq 1 ]; then
-    if [ -f /etc/yum.conf ]; then
-        sed -i '/installonly_limit/ a\http_caching=none' /etc/yum.conf
-    fi
-fi
-
+%post gnome
 if [ -x /usr/bin/glib-compile-schemas ]; then
     glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 fi
 
 
-%postun
+%postun gnome
 if [ -x /usr/bin/glib-compile-schemas ]; then
     glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 fi
@@ -72,10 +76,18 @@ fi
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
 %{_sysconfdir}/X11/xorg.conf.d/11-evdev-trackpoint.conf
 %config(noreplace) %{_sysconfdir}/skel/.config/clipit/clipitrc
+
+%files gnome
+%defattr(-,root,root,-)
+%doc GPL README AUTHORS Changelog
 %{_datadir}/glib-2.0/schemas/*.override
 
 
 %changelog
+* Tue Jan 19 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 23-1.R
+- set Korora as default theme for GNOME Shell
+- create separate package to configure GNOME
+
 * Mon Jan 13 2014 Arkady L. Shane <ashejn@russianfedora.ru> - 20-2.R
 - added trackpoint config
 
