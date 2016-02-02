@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        23
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -84,6 +84,9 @@ fi
 
 
 %changelog
+* Tue Feb  2 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 23-2.R
+- added russianfedora override schema file
+
 * Tue Jan 19 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 23-1.R
 - set Korora as default theme for GNOME Shell
 - create separate package to configure GNOME
