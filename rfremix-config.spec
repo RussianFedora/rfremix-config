@@ -84,6 +84,10 @@ fi
 
 
 %changelog
+* Wed Mar 23 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 24-1.R
+- set scaling to 0.97
+- set hinting to medium
+
 * Tue Feb  2 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 23-2.R
 - added russianfedora override schema file
 
