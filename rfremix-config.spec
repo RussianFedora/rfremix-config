@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
-Version:        23
-Release:        2%{?dist}
+Version:        24
+Release:        1%{?dist}
 Epoch:          3
 
 License:        GPLv2
