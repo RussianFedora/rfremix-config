@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        24
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -84,6 +84,9 @@ fi
 
 
 %changelog
+* Thu Mar 24 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 24-2.R
+- drop quotes in schema
+
 * Wed Mar 23 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 24-1.R
 - set scaling to 0.97
 - set hinting to medium
