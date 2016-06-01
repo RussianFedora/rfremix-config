@@ -2,3 +2,5 @@
 menu-accelerator-enabled=false
 dark-theme=true
 
+[org.gnome.shell]
+enabled-extensions=['background-logo@fedorahosted.org', 'user-theme@gnome-shell-extensions.gcampax.github.com']

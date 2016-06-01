@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        24
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -84,6 +84,9 @@ fi
 
 
 %changelog
+* Wed Jun  1 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 24-3.R
+- enable user-theme extension in GNOME Shell
+
 * Thu Mar 24 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 24-2.R
 - drop quotes in schema
 
