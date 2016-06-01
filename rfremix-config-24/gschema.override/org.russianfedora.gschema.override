@@ -1,6 +1,6 @@
 [org.gnome.Terminal.Legacy.Settings]
 menu-accelerator-enabled=false
-dark-theme=true
+theme-variant=true
 
 [org.gnome.shell]
 enabled-extensions=['background-logo@fedorahosted.org', 'user-theme@gnome-shell-extensions.gcampax.github.com']
