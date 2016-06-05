@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        24
-Release:        4%{?dist}
+Release:        5%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -84,6 +84,9 @@ fi
 
 
 %changelog
+* Sun Jun  5 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 24-5.R
+- fix setup of terminal theme
+
 * Wed Jun  1 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 24-4.R
 - fix setup of dark theme for terminal
 
