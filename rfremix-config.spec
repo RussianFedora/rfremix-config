@@ -1,11 +1,10 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        26
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          3
 
 License:        GPLv2
-Group:          System Environment/Base
 URL:            http://russianfedora.pro
 Source:         %{name}-%{version}.tar.xz
 BuildArch:      noarch
@@ -19,8 +18,6 @@ clipitrc        - configure clipit (do not save history by default)
 
 %package gnome
 Summary:        RFRemix configurations for GNOME
-Group:          System Environment/Libraries
-License:        GPLv2
 
 Requires:       gnome-shell-theme-korora
 Requires:       gnome-shell-extension-user-theme
@@ -34,6 +31,27 @@ org.gnome.settings-daemon.plugins.xsettings.gschema.override - set antialiasing
                   rgba
 org.gnome.shell.extensions.user-theme.gschema.override - set Korora GNOME
                   Shell theme by default
+
+%package external-repos
+Summary:	External repos with well known proprietaty products
+
+Requires(post): fedora-repos
+
+%description external-repos
+This package contaion repository configs to easy setup several proprietaty
+products. At this time supported:
+    Dropbox
+    google-chrome
+    mail.ru-cloud
+    MEGAsync
+    skype-stable
+    virtualbox
+    yandex-browser
+    yandex-disk
+
+All repos are disabled you should enable it by:
+
+dnf config-manager --set-enabled <repo>
 
 %prep
 %setup -q
@@ -58,6 +76,9 @@ install -m644 gschema.override/* \
 
 install -m644 clipitrc %{buildroot}/etc/skel/.config/clipit/
 
+install -dD %{buildroot}%{_datadir}/%{name}-external-repos
+cp repos/*.repo %{buildroot}%{_datadir}/%{name}-external-repos
+
 %post gnome
 if [ -x /usr/bin/glib-compile-schemas ]; then
     glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
@@ -69,21 +90,67 @@ if [ -x /usr/bin/glib-compile-schemas ]; then
     glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 fi
 
+%post external-repos
+if [ $1 -eq 1 ]; then
+    cp %{_datadir}/%{name}-external-repos/*.repo \
+        %{_syscondfir}/yum.repos.d/
+fi
+
+%postun external-repos
+if [ $1 -eq 0 ]; then
+    if [ ! -f /usr/bin/yandex-disk ]; then
+        rm -f %{_syscondfir}/yum.repos.d/yandex-disk.repo
+    fi
+
+    if [ ! -f /usr/bin/yandex-browser ]; then
+        rm -f %{_syscondfir}/yum.repos.d/yandex-browser.repo
+    fi
+
+    if [ ! -f /usr/bin/dropbox ]; then
+        rm -f %{_syscondfir}/yum.repos.d/dropbox.repo
+    fi
+
+    if [ ! -f /usr/bin/cloud ]; then
+        rm -f %{_syscondfir}/yum.repos.d/mail.ru-cloud.repo
+    fi
+
+    if [ ! -f /usr/bin/megasync ]; then
+        rm -f %{_syscondfir}/yum.repos.d/megasync.repo
+    fi
+
+    if [ ! -f /usr/bin/google-chrome ]; then
+        rm -f %{_syscondfir}/yum.repos.d/google-chrome.repo
+    fi
+
+    if [ ! -f /usr/bin/VirtualBox ]; then
+        rm -f %{_syscondfir}/yum.repos.d/virtualbox.repo
+    fi
+
+    if [ ! -f /usr/bin/skypeforlinux ]; then
+        rm -f %{_syscondfir}/yum.repos.d/skype-stable.repo
+    fi
+fi
 
 %files
-%defattr(-,root,root,-)
 %doc GPL README AUTHORS Changelog
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
 %{_sysconfdir}/X11/xorg.conf.d/11-evdev-trackpoint.conf
 %config(noreplace) %{_sysconfdir}/skel/.config/clipit/clipitrc
 
 %files gnome
-%defattr(-,root,root,-)
 %doc GPL README AUTHORS Changelog
 %{_datadir}/glib-2.0/schemas/*.override
 
+%files external-repos
+%doc GPL README AUTHORS Changelog
+%{_datadir}/%{name}-external-repos
+
+
 
 %changelog
+* Fri Mar 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-2.R
+- added external repo package
+
 * Fri Mar 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-1.R
 - added GPaste@gnome-shell-extensions.gnome.org extension to start
 
