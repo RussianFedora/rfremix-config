@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
-Version:        24
-Release:        5%{?dist}
+Version:        26
+Release:        1%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -84,6 +84,9 @@ fi
 
 
 %changelog
+* Fri Mar 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-1.R
+- added GPaste@gnome-shell-extensions.gnome.org extension to start
+
 * Sun Jun  5 2016 Arkady L. Shane <ashejn@russianfedora.ru> - 24-5.R
 - fix setup of terminal theme
 
