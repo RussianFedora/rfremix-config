@@ -33,7 +33,7 @@ org.gnome.shell.extensions.user-theme.gschema.override - set Korora GNOME
                   Shell theme by default
 
 %package external-repos
-Summary:	External repos with well known proprietaty products
+Summary:        External repos with well known proprietaty products
 
 Requires(post): fedora-repos
 
@@ -248,7 +248,7 @@ fi
 - override antialiasing. Rgba by default
 - set Sans Bold 11 as default metacity font
 
-* Mon Jan 21 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.2-1
+* Mon Jan 24 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 0.9.2-1
 - attach floppy in modprobe.d
 - do not start rfremixconf service after update from 0.9.1
 
