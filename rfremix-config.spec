@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        26
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -93,49 +93,49 @@ fi
 %post external-repos
 if [ $1 -eq 1 ]; then
     cp %{_datadir}/%{name}-external-repos/*.repo \
-        %{_syscondfir}/yum.repos.d/
+        %{_sysconfdir}/yum.repos.d/
 fi
 
 %postun external-repos
 if [ $1 -eq 0 ]; then
     if [ ! -f /usr/bin/yandex-disk ]; then
-        rm -f %{_syscondfir}/yum.repos.d/yandex-disk.repo
+        rm -f %{_sysconfdir}/yum.repos.d/yandex-disk.repo
     fi
 
     if [ ! -f /usr/bin/yandex-browser ]; then
-        rm -f %{_syscondfir}/yum.repos.d/yandex-browser*.repo
+        rm -f %{_sysconfdir}/yum.repos.d/yandex-browser*.repo
     fi
 
     if [ ! -f /usr/bin/dropbox ]; then
-        rm -f %{_syscondfir}/yum.repos.d/dropbox.repo
+        rm -f %{_sysconfdir}/yum.repos.d/dropbox.repo
     fi
 
     if [ ! -f /usr/bin/cloud ]; then
-        rm -f %{_syscondfir}/yum.repos.d/mail.ru-cloud.repo
+        rm -f %{_sysconfdir}/yum.repos.d/mail.ru-cloud.repo
     fi
 
     if [ ! -f /usr/bin/megasync ]; then
-        rm -f %{_syscondfir}/yum.repos.d/megasync.repo
+        rm -f %{_sysconfdir}/yum.repos.d/megasync.repo
     fi
 
     if [ ! -f /usr/bin/google-chrome ]; then
-        rm -f %{_syscondfir}/yum.repos.d/google-chrome.repo
+        rm -f %{_sysconfdir}/yum.repos.d/google-chrome.repo
     fi
 
     if [ ! -f /usr/bin/VirtualBox ]; then
-        rm -f %{_syscondfir}/yum.repos.d/virtualbox.repo
+        rm -f %{_sysconfdir}/yum.repos.d/virtualbox.repo
     fi
 
     if [ ! -f /usr/bin/skypeforlinux ]; then
-        rm -f %{_syscondfir}/yum.repos.d/skype-stable.repo
+        rm -f %{_sysconfdir}/yum.repos.d/skype-stable.repo
     fi
 
     if [ ! -f /usr/bin/slack ]; then
-        rm -f %{_syscondfir}/yum.repos.d/slack.repo
+        rm -f %{_sysconfdir}/yum.repos.d/slack.repo
     fi
 
     if [ ! -f /usr/bin/vk ]; then
-        rm -f %{_syscondfir}/yum.repos.d/vk.repo
+        rm -f %{_sysconfdir}/yum.repos.d/vk.repo
     fi
 
 fi
@@ -158,6 +158,9 @@ fi
 
 
 %changelog
+* Wed May 10 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-3.R
+- fix typos
+
 * Fri Mar 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-2.R
 - added external repo package
 
