@@ -132,17 +132,18 @@ if [ $1 -eq 0 ]; then
 fi
 
 %files
-%doc GPL README AUTHORS Changelog
+%license COPYING
+%doc README AUTHORS Changelog
 %{_sysconfdir}/modprobe.d/floppy-pnp.conf
 %{_sysconfdir}/X11/xorg.conf.d/11-evdev-trackpoint.conf
 %config(noreplace) %{_sysconfdir}/skel/.config/clipit/clipitrc
 
 %files gnome
-%doc GPL README AUTHORS Changelog
+%doc README AUTHORS Changelog
 %{_datadir}/glib-2.0/schemas/*.override
 
 %files external-repos
-%doc GPL README AUTHORS Changelog
+%doc README AUTHORS Changelog
 %{_datadir}/%{name}-external-repos
 
 
