@@ -103,7 +103,7 @@ if [ $1 -eq 0 ]; then
     fi
 
     if [ ! -f /usr/bin/yandex-browser ]; then
-        rm -f %{_syscondfir}/yum.repos.d/yandex-browser.repo
+        rm -f %{_syscondfir}/yum.repos.d/yandex-browser*.repo
     fi
 
     if [ ! -f /usr/bin/dropbox ]; then
@@ -129,6 +129,15 @@ if [ $1 -eq 0 ]; then
     if [ ! -f /usr/bin/skypeforlinux ]; then
         rm -f %{_syscondfir}/yum.repos.d/skype-stable.repo
     fi
+
+    if [ ! -f /usr/bin/slack ]; then
+        rm -f %{_syscondfir}/yum.repos.d/slack.repo
+    fi
+
+    if [ ! -f /usr/bin/vk ]; then
+        rm -f %{_syscondfir}/yum.repos.d/vk.repo
+    fi
+
 fi
 
 %files
