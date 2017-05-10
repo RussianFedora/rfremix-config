@@ -3,6 +3,5 @@ name=Fedora $releasever - $basearch - VirtualBox
 baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/25/$basearch
 enabled=0
 gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://www.virtualbox.org/download/oracle_vbox.asc
+gpgkey=http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc
 skip_if_unavailable=True
