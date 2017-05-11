@@ -2,7 +2,7 @@ Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        26
 Release:        3%{?dist}
-Epoch:          3
+Epoch:          4
 
 License:        GPLv2
 URL:            http://russianfedora.pro
@@ -40,12 +40,13 @@ Requires(post): fedora-repos
 %description external-repos
 This package contaion repository configs to easy setup several proprietaty
 products. At this time supported:
-    Dropbox
     google-chrome
     mail.ru-cloud
     MEGAsync
     skype-stable
+    slack
     virtualbox
+    vk
     yandex-browser
     yandex-disk
 
@@ -106,10 +107,6 @@ if [ $1 -eq 0 ]; then
         rm -f %{_sysconfdir}/yum.repos.d/yandex-browser*.repo
     fi
 
-    if [ ! -f /usr/bin/dropbox ]; then
-        rm -f %{_sysconfdir}/yum.repos.d/dropbox.repo
-    fi
-
     if [ ! -f /usr/bin/cloud ]; then
         rm -f %{_sysconfdir}/yum.repos.d/mail.ru-cloud.repo
     fi
@@ -158,6 +155,11 @@ fi
 
 
 %changelog
+* Thu May 10 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-4.R
+- drop dropbox repo
+- use keyserver gpg path for VK
+- update path for slack
+
 * Wed May 10 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-3.R
 - fix typos
 
