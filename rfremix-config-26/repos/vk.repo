@@ -3,5 +3,6 @@ name=VK Messenger repository
 baseurl=https://desktop.userapi.com/rpm/master
 gpgcheck=1
 enabled=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-vk
+# VK key on keyserver
+gpgkey=https://pgp.mit.edu/pks/lookup?search=0x85605D02&options=mr&op=get
 skip_if_unavailable=True
