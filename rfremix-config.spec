@@ -1,8 +1,8 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        26
-Release:        3%{?dist}
-Epoch:          4
+Release:        4%{?dist}
+Epoch:          3
 
 License:        GPLv2
 URL:            http://russianfedora.pro
