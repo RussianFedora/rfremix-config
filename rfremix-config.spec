@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        26
-Release:        5%{?dist}
+Release:        6%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -36,6 +36,7 @@ org.gnome.shell.extensions.user-theme.gschema.override - set Korora GNOME
 Summary:        External repos with well known proprietaty products
 
 Requires:	fedora-repos
+Requires(post):	coreutils
 
 %description external-repos
 This package contaion repository configs to easy setup several proprietaty
@@ -158,6 +159,9 @@ fi
 
 
 %changelog
+* Wed May 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-6.R
+- added R: coreutils
+
 * Wed May 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-5.R
 - added R: fedora-repos
 - provides yum.repos.d too
