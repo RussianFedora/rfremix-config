@@ -80,6 +80,8 @@ install -m644 clipitrc %{buildroot}/etc/skel/.config/clipit/
 install -dD %{buildroot}%{_datadir}/%{name}-external-repos
 cp repos/*.repo %{buildroot}%{_datadir}/%{name}-external-repos
 
+install -dD %{_sysconfdir}/yum.repos.d
+
 %post gnome
 if [ -x /usr/bin/glib-compile-schemas ]; then
     glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
@@ -151,12 +153,14 @@ fi
 %files external-repos
 %doc README AUTHORS Changelog
 %{_datadir}/%{name}-external-repos
+%dir %{_sysconfdir}/yum.repos.d
 
 
 
 %changelog
 * Wed May 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-5.R
 - added R: fedora-repos
+- provides yum.repos.d too
 
 * Thu May 10 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-4.R
 - drop dropbox repo
