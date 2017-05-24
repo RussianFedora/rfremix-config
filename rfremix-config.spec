@@ -80,7 +80,7 @@ install -m644 clipitrc %{buildroot}/etc/skel/.config/clipit/
 install -dD %{buildroot}%{_datadir}/%{name}-external-repos
 cp repos/*.repo %{buildroot}%{_datadir}/%{name}-external-repos
 
-install -dD %{_sysconfdir}/yum.repos.d
+install -dD %{buildroot}%{_sysconfdir}/yum.repos.d
 
 %post gnome
 if [ -x /usr/bin/glib-compile-schemas ]; then
