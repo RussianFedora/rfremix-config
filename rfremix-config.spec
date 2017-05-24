@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        26
-Release:        4%{?dist}
+Release:        5%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -35,7 +35,7 @@ org.gnome.shell.extensions.user-theme.gschema.override - set Korora GNOME
 %package external-repos
 Summary:        External repos with well known proprietaty products
 
-Requires(post): fedora-repos
+Requires:	fedora-repos
 
 %description external-repos
 This package contaion repository configs to easy setup several proprietaty
@@ -155,6 +155,9 @@ fi
 
 
 %changelog
+* Wed May 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-5.R
+- added R: fedora-repos
+
 * Thu May 10 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-4.R
 - drop dropbox repo
 - use keyserver gpg path for VK
