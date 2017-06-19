@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        26
-Release:        6%{?dist}
+Release:        7%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -36,6 +36,7 @@ org.gnome.shell.extensions.user-theme.gschema.override - set Korora GNOME
 Summary:        External repos with well known proprietaty products
 
 Requires:	fedora-repos
+Requires(post):	coreutils
 
 %description external-repos
 This package contaion repository configs to easy setup several proprietaty
@@ -46,6 +47,7 @@ products. At this time supported:
     skype-stable
     slack
     virtualbox
+    vivaldi
     vk
     yandex-browser
     yandex-disk
@@ -137,6 +139,9 @@ if [ $1 -eq 0 ]; then
         rm -f %{_sysconfdir}/yum.repos.d/vk.repo
     fi
 
+    if [ ! -f /usr/bin/vivaldi ]; then
+        rm -f %{_sysconfdir}/yum.repos.d/vivaldi.repo
+    fi
 fi
 
 %files
@@ -158,8 +163,11 @@ fi
 
 
 %changelog
-* Mon Jun 19 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-6.R
+* Mon Jun 19 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-7.R
 - added vivaldi repo
+
+* Wed May 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-6.R
+- added R: coreutils
 
 * Wed May 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-5.R
 - added R: fedora-repos
