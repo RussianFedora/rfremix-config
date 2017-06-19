@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
 Version:        26
-Release:        5%{?dist}
+Release:        6%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -158,6 +158,9 @@ fi
 
 
 %changelog
+* Mon Jun 19 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-6.R
+- added vivaldi repo
+
 * Wed May 24 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-5.R
 - added R: fedora-repos
 - provides yum.repos.d too
