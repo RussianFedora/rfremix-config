@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
-Version:        26
-Release:        7%{?dist}
+Version:        27
+Release:        1%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -163,6 +163,10 @@ fi
 
 
 %changelog
+* Wed Sep  6 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 27-1.R
+- rebease on RFRemix 27
+- added GPaste scheme
+
 * Mon Jun 19 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 26-7.R
 - added vivaldi repo
 
