@@ -1,5 +1,5 @@
 [org.gnome.GPaste]
-synchronize-clipboards='true'
-trim-items='true'
-track-extension-state='true'
-growing-lines='true'
+synchronize-clipboards=true
+trim-items=true
+track-extension-state=true
+growing-lines=true
