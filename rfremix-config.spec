@@ -1,7 +1,7 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
-Version:        27
-Release:        2%{?dist}
+Version:        28
+Release:        1%{?dist}
 Epoch:          3
 
 License:        GPLv2
@@ -163,6 +163,10 @@ fi
 
 
 %changelog
+* Fri Apr  6 2018 Arkady L. Shane <ashejn@russianfedora.ru> - 28-1.R
+- rebase on RFRemix 28
+- change some url
+
 * Fri Oct 17 2017 Arkady L. Shane <ashejn@russianfedora.ru> - 27-2.R
 - update same repos urls
 
