@@ -1,6 +1,6 @@
 Summary:        RFRemix configure scripts and configs
 Name:           rfremix-config
-Version:        28
+Version:        29
 Release:        1%{?dist}
 Epoch:          3
 
@@ -163,6 +163,9 @@ fi
 
 
 %changelog
+* Wed Sep 19 2018 Arkady L. Shane <ashejn@russianfedora.ru> - 29-1.R
+- rebase on RFRemix 29
+
 * Fri Apr  6 2018 Arkady L. Shane <ashejn@russianfedora.ru> - 28-1.R
 - rebase on RFRemix 28
 - change some url
